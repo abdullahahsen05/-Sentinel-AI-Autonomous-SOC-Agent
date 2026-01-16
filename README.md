@@ -25,18 +25,23 @@ Traditional security systems rely on static threshold rules (e.g., "Block after 
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Quickstart: Installation & Execution
 
-### 1. Prerequisites
-Install [Ollama](https://ollama.ai) and pull the high-performance model:
+Run these commands in your terminal to set up the environment and start the system:
+
 ```bash
+# 1. Install & Pull AI Model (Requires Ollama)
 ollama pull llama3.1
-2. InstallationBashgit clone [https://github.com/YOUR_USERNAME/sentinel-ai.git](https://github.com/YOUR_USERNAME/sentinel-ai.git)
-cd sentinel-ai
-pip install -r requirements.txt
-3. ExecutionRun the Sentinel and the Dashboard in separate terminal windows:Bash# Terminal 1: AI Agent
-python3 main.py
 
-# Terminal 2: SOC Dashboard
-streamlit run dashboard.py
-📊 Dashboard IntelligenceThe dashboard serves as a Command Center, providing:Severity Breakdown: A Plotly Pie Chart categorizing threat levels (Critical, Warning, Low).Threat Distribution: Bar charts tracking the most aggressive attack sources.Incident Metrics: Real-time counters for unique IPs and total threats neutralized.Live Audit Log: A complete history derived from security_events.csv.Note: [Insert Screenshot of your Dashboard here]📜 Forensic Audit TrailEvery autonomous decision is logged in a persistent security_events.csv for post-incident analysis:TimestampIP AddressActionSeverityJan 16 05:20192.168.1.99BANNEDCRITICAL🛡️ DisclaimerThis project is built for educational and portfolio purposes, demonstrating the application of Agentic AI in automated cybersecurity defense.
+# 2. Setup Project & Environment
+git clone [https://github.com/YOUR_USERNAME/sentinel-ai.git](https://github.com/YOUR_USERNAME/sentinel-ai.git)
+cd sentinel-ai
+python3 -m venv venv
+source venv/bin/activate
+pip install langchain-ollama langgraph streamlit pandas plotly
+
+# 3. Launch the System (Run in separate terminal windows)
+python3 main.py              # Starts the AI Agent
+streamlit run dashboard.py    # Starts the SOC Dashboard
+
+📊 Dashboard IntelligenceThe dashboard serves as a Central Command Center for security analysts, providing high-level telemetry and granular threat data:Key Performance Indicators (KPIs)Total Incidents: Cumulative count of detected and processed threats.Unique IPs Blocked: Tracks the diversity of attack origins.Critical Alerts: Highlights high-severity incidents requiring immediate review.Advanced VisualizationsSeverity Breakdown (Pie Chart): Uses a Plotly Donut Chart to visualize the distribution of threat levels (CRITICAL, WARNING, LOW) as categorized by the LLM.IP Threat Distribution (Bar Chart): Ranks the most aggressive source IPs, allowing analysts to identify persistent attackers.Note: [Insert Screenshot of your Dashboard here]📜 Forensic Audit TrailEvery autonomous decision made by the AI is recorded in a persistent security_events.csv file. This serves as a verifiable forensic record for post-incident investigation and compliance auditing.Sample Audit LogTimestampIP AddressActionAI-Assigned SeverityJan 16 05:20:12192.168.1.99BANNEDCRITICALJan 16 05:21:4510.0.0.44BANNEDWARNINGJan 16 05:22:10172.16.0.12BANNEDCRITICALEach entry includes the specific reasoning used by the AI Agent to determine why a particular IP was neutralized, ensuring transparency in autonomous actions.🛡️ DisclaimerThis project is built for educational and portfolio purposes, demonstrating the application of Agentic AI in automated cybersecurity defense. Always obtain proper authorization before testing security tools on external networks.
