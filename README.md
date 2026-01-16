@@ -34,7 +34,7 @@ Run these commands in your terminal to set up the environment and start the syst
 ollama pull llama3.1
 
 # 2. Setup Project & Environment
-git clone [https://github.com/YOUR_USERNAME/sentinel-ai.git](https://github.com/YOUR_USERNAME/sentinel-ai.git)
+git clone https://github.com/YOUR_USERNAME/sentinel-ai.git
 cd sentinel-ai
 python3 -m venv venv
 source venv/bin/activate
@@ -44,4 +44,30 @@ pip install langchain-ollama langgraph streamlit pandas plotly
 python3 main.py              # Starts the AI Agent
 streamlit run dashboard.py    # Starts the SOC Dashboard
 
-📊 Dashboard IntelligenceThe dashboard serves as a Central Command Center for security analysts, providing high-level telemetry and granular threat data:Key Performance Indicators (KPIs)Total Incidents: Cumulative count of detected and processed threats.Unique IPs Blocked: Tracks the diversity of attack origins.Critical Alerts: Highlights high-severity incidents requiring immediate review.Advanced VisualizationsSeverity Breakdown (Pie Chart): Uses a Plotly Donut Chart to visualize the distribution of threat levels (CRITICAL, WARNING, LOW) as categorized by the LLM.IP Threat Distribution (Bar Chart): Ranks the most aggressive source IPs, allowing analysts to identify persistent attackers.Note: [Insert Screenshot of your Dashboard here]📜 Forensic Audit TrailEvery autonomous decision made by the AI is recorded in a persistent security_events.csv file. This serves as a verifiable forensic record for post-incident investigation and compliance auditing.Sample Audit LogTimestampIP AddressActionAI-Assigned SeverityJan 16 05:20:12192.168.1.99BANNEDCRITICALJan 16 05:21:4510.0.0.44BANNEDWARNINGJan 16 05:22:10172.16.0.12BANNEDCRITICALEach entry includes the specific reasoning used by the AI Agent to determine why a particular IP was neutralized, ensuring transparency in autonomous actions.🛡️ DisclaimerThis project is built for educational and portfolio purposes, demonstrating the application of Agentic AI in automated cybersecurity defense. Always obtain proper authorization before testing security tools on external networks.
+---
+
+## 📊 Dashboard Intelligence
+The dashboard serves as a Central Command Center for security analysts, providing high-level telemetry and granular threat data.
+
+### **Key Performance Indicators (KPIs)**
+* **Total Incidents:** Cumulative count of detected and processed threats.
+* **Unique IPs Blocked:** Tracks the diversity of attack origins.
+* **Critical Alerts:** Highlights high-severity incidents requiring immediate review.
+
+### **Advanced Visualizations**
+* **Severity Breakdown (Pie Chart):** Uses a **Plotly Donut Chart** to visualize the distribution of threat levels (CRITICAL, WARNING, LOW) as categorized by the LLM.
+* **IP Threat Distribution (Bar Chart):** Ranks the most aggressive source IPs, allowing analysts to identify persistent attackers.
+
+---
+
+## 📜 Forensic Audit Trail
+Every autonomous decision made by the AI is recorded in a persistent `security_events.csv` file. This serves as a verifiable forensic record for post-incident investigation and compliance auditing.
+
+### **Sample Audit Log Table**
+| Timestamp | IP Address | Action | AI-Assigned Severity |
+| :--- | :--- | :--- | :--- |
+| Jan 16 05:20:12 | 192.168.1.99 | **BANNED** | 🔴 CRITICAL |
+| Jan 16 05:21:45 | 10.0.0.44 | **BANNED** | 🟡 WARNING |
+| Jan 16 05:22:10 | 172.16.0.12 | **BANNED** | 🔴 CRITICAL |
+
+> **Transparency Note:** Each entry includes the specific reasoning used by the AI Agent to determine why a particular IP was neutralized, ensuring explainability in autonomous actions.
