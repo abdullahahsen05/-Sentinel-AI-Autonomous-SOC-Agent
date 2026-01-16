@@ -1,73 +1,68 @@
 # 🛡️ Sentinel AI: Autonomous SOC Agent
-### *Self-Healing Security Infrastructure using LangGraph and Llama 3.1*
 
-Sentinel AI is an autonomous Security Operations Center (SOC) agent designed to bridge the gap between detection and response. By leveraging **Llama 3.1** and **Agentic Reasoning**, it doesn't just alert—it analyzes, decides, and acts to neutralize threats in real-time.
-
----
-
-## 🧠 Project Concept
-Traditional security systems rely on static threshold rules (e.g., "Block after 5 attempts"). **Sentinel AI** introduces **Reasoning + Acting (ReAct)**:
-* **Detection:** Real-time tailing of system authentication logs.
-* **Brain:** A LangGraph-orchestrated agent using Llama 3.1 to distinguish between human errors and scripted brute-force attacks.
-* **Response:** Autonomous tool-calling to ban malicious IPs and update forensic audit logs.
-* **Visibility:** A live Streamlit dashboard providing threat telemetry and severity analytics.
+### 📌 Project Overview
+This project demonstrates the deployment of an **Autonomous Security Operations Center (SOC) Agent**. Using **LangGraph** and **Llama 3.1**, the system monitors system authentication logs in real-time, leverages LLM reasoning to identify brute-force attacks, and autonomously executes firewall actions to neutralize threats.
 
 
 
 ---
 
-## 🛠️ Technology Stack
-* **LLM:** Llama 3.1 (8B) / Llama 3.2 via **Ollama**
-* **Framework:** LangGraph & LangChain (Agentic Workflows)
-* **Frontend:** Streamlit (SOC Dashboard)
-* **Visualization:** Plotly Express (Interactive Pie/Bar Charts)
-* **Backend:** Python 3.10+ on Ubuntu Linux
+### 🛠️ Architecture
+* **AI Engine:** Llama 3.1 (8B) via Ollama (Local LLM).
+* **Orchestration:** LangGraph (Stateful ReAct Agent).
+* **Dashboard:** Streamlit & Plotly (Real-time Telemetry).
+* **Traffic Flow:** Attacker (Failed Logins) -> `auth.log` -> **Sentinel AI Agent** -> Python `ban_ip` Tool -> `security_events.csv` -> Dashboard UI.
 
 ---
 
-## 🚀 Quickstart: Installation & Execution
+### ⚙️ Configuration Highlights
 
-Run these commands in your terminal to set up the environment and start the system:
+#### 1. Agentic Reasoning (ReAct Pattern)
+Unlike static security rules, Sentinel AI uses a **Reasoning + Acting** loop. It analyzes the context of a log entry (targeted usernames, frequency, and IP reputation) before deciding whether to trigger a block, significantly reducing false positives.
 
-```bash
-# 1. Install & Pull AI Model (Requires Ollama)
-ollama pull llama3.1
-
-# 2. Setup Project & Environment
-git clone https://github.com/YOUR_USERNAME/sentinel-ai.git
-cd sentinel-ai
-python3 -m venv venv
-source venv/bin/activate
-pip install langchain-ollama langgraph streamlit pandas plotly
-
-# 3. Launch the System (Run in separate terminal windows)
-python3 main.py              # Starts the AI Agent
-streamlit run dashboard.py    # Starts the SOC Dashboard
+#### 2. Autonomous Tool Calling
+The agent is equipped with a custom Python toolset. When a threat is confirmed, the LLM autonomously generates parameters to call `action_ban_ip()`, which updates the local security policy and logs the event for forensic review.
 
 ---
 
-## 📊 Dashboard Intelligence
-The dashboard serves as a Central Command Center for security analysts, providing high-level telemetry and granular threat data.
+### 🛡️ Attack Simulation & Defense
 
-### **Key Performance Indicators (KPIs)**
-* **Total Incidents:** Cumulative count of detected and processed threats.
-* **Unique IPs Blocked:** Tracks the diversity of attack origins.
-* **Critical Alerts:** Highlights high-severity incidents requiring immediate review.
+#### **Scenario 1: Brute-Force SSH Attack**
+* **Attack:** Simulated a rapid-fire failed login attempt targeting `root` and `admin` accounts.
+* **Outcome:** The AI Agent detected the pattern, identified it as a "High Severity Brute Force" attempt, and autonomously banned the IP.
+* **Log Verification:** The agent logged: *"Multiple failed attempts on sensitive accounts from a single source detected."*
 
-### **Advanced Visualizations**
-* **Severity Breakdown (Pie Chart):** Uses a **Plotly Donut Chart** to visualize the distribution of threat levels (CRITICAL, WARNING, LOW) as categorized by the LLM.
-* **IP Threat Distribution (Bar Chart):** Ranks the most aggressive source IPs, allowing analysts to identify persistent attackers.
+#### **Scenario 2: Multi-Vector Threat Detection**
+* **Defense:** Tested the agent's ability to handle multiple unique attacker IPs simultaneously.
+* **Result:** The Streamlit dashboard successfully tracked unique "Attacker Origins" and updated the **Severity Breakdown** chart in real-time.
 
 ---
 
-## 📜 Forensic Audit Trail
-Every autonomous decision made by the AI is recorded in a persistent `security_events.csv` file. This serves as a verifiable forensic record for post-incident investigation and compliance auditing.
+### 📸 Proof of Concept
 
-### **Sample Audit Log Table**
-| Timestamp | IP Address | Action | AI-Assigned Severity |
+#### 1. Sentinel AI Dashboard (Real-time Analytics)
+<img width="1918" height="1078" alt="dashboard" src="https://github.com/user-attachments/assets/b2dcbe63-18cf-46e3-88d4-9b5b8b23f9e3" />
+*(Overview of real-time incident metrics, IP distribution bar charts, and threat severity pie charts.)*
+
+#### 2. AI Agent Reasoning (Terminal)
+<img width="1905" height="831" alt="threats" src="https://github.com/user-attachments/assets/95498f90-339a-419f-91e1-56a6c819eaa4" />
+*(Screenshot showing the LLM's thought process: "Analyzing logs... Brute force detected... Banning IP.")*
+
+#### 3. Forensic Audit Trail
+<img width="747" height="196" alt="logs banning" src="https://github.com/user-attachments/assets/f657f060-9005-4946-a52f-581db3da37bc" />
+| Timestamp | IP Address | Action | AI Severity |
 | :--- | :--- | :--- | :--- |
-| Jan 16 05:20:12 | 192.168.1.99 | **BANNED** | 🔴 CRITICAL |
-| Jan 16 05:21:45 | 10.0.0.44 | **BANNED** | 🟡 WARNING |
-| Jan 16 05:22:10 | 172.16.0.12 | **BANNED** | 🔴 CRITICAL |
+| Jan 16 05:20 | 192.168.1.99 | **BANNED** | 🔴 CRITICAL |
+| Jan 16 05:21 | 10.0.0.44 | **BANNED** | 🟡 WARNING |
 
-> **Transparency Note:** Each entry includes the specific reasoning used by the AI Agent to determine why a particular IP was neutralized, ensuring explainability in autonomous actions.
+---
+
+### 🚀 Key Takeaways
+* **Agentic Workflows:** Practical experience building stateful AI agents using **LangGraph**.
+* **LLM Integration:** Implementing local LLMs (Llama 3.1) for specialized cybersecurity tasks.
+* **Threat Intelligence:** Developing a real-time data pipeline from raw logs to interactive visual analytics.
+
+---
+
+### 🛡️ Disclaimer
+*This project is built for educational and portfolio purposes. Always ensure proper authorization before running security tools on production systems.*
