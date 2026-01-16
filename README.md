@@ -50,6 +50,8 @@ The agent is equipped with a custom Python toolset. When a threat is confirmed, 
 
 #### 3. Forensic Audit Trail
 <img width="747" height="196" alt="logs banning" src="https://github.com/user-attachments/assets/f657f060-9005-4946-a52f-581db3da37bc" />
+
+
 | Timestamp | IP Address | Action | AI Severity |
 | :--- | :--- | :--- | :--- |
 | Jan 16 05:20 | 192.168.1.99 | **BANNED** | 🔴 CRITICAL |
